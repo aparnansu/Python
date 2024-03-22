@@ -27,37 +27,3 @@
 [2024-03-21 23:20:22,401] Aparn-Laptop/INFO/root: User 9 completed Query
 [2024-03-21 23:20:22,438] Aparn-Laptop/INFO/root: User 10 started
 [2024-03-21 23:20:22,439] Aparn-Laptop/INFO/root: User 10 Executing Query select * from sample_table
-Traceback (most recent call last):
-  File "C:\Users\aparn\PycharmProjects\Python\db_locust_postgres.py", line 38, in executequery
-    rows = cursor.fetchall()
-           ^^^^^^^^^^^^^^^^^
-KeyboardInterrupt
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "src\\gevent\\greenlet.py", line 908, in gevent._gevent_cgreenlet.Greenlet.run
-  File "C:\Users\aparn\PycharmProjects\Python\venv\Lib\site-packages\locust\user\users.py", line 188, in run_user
-    user.run()
-  File "C:\Users\aparn\PycharmProjects\Python\venv\Lib\site-packages\locust\user\users.py", line 156, in run
-    self._taskset_instance.run()
-  File "C:\Users\aparn\PycharmProjects\Python\venv\Lib\site-packages\locust\user\task.py", line 340, in run
-    self.execute_next_task()
-  File "C:\Users\aparn\PycharmProjects\Python\venv\Lib\site-packages\locust\user\task.py", line 373, in execute_next_task
-    self.execute_task(self._task_queue.pop(0))
-  File "C:\Users\aparn\PycharmProjects\Python\venv\Lib\site-packages\locust\user\task.py", line 487, in execute_task
-    task(self.user).run()
-  File "C:\Users\aparn\PycharmProjects\Python\venv\Lib\site-packages\locust\user\task.py", line 340, in run
-    self.execute_next_task()
-  File "C:\Users\aparn\PycharmProjects\Python\venv\Lib\site-packages\locust\user\task.py", line 373, in execute_next_task
-    self.execute_task(self._task_queue.pop(0))
-  File "C:\Users\aparn\PycharmProjects\Python\venv\Lib\site-packages\locust\user\task.py", line 385, in execute_task
-    task(self)
-  File "C:\Users\aparn\PycharmProjects\Python\db_locust_postgres.py", line 43, in executequery
-    cursor.close()
-KeyboardInterrupt
-2024-03-22T03:20:23Z <Greenlet at 0x27985c949a0: run_user(<db_locust_postgres.Testuser object at 0x000002798)> failed with KeyboardInterrupt
-
-[2024-03-21 23:20:23,474] Aparn-Laptop/INFO/locust.main: Shutting down (exit code 0)
-[2024-03-21 23:20:23,560] Aparn-Laptop/INFO/root: User 1 started
-[2024-03-21 23:20:23,592] Aparn-Laptop/INFO/root: User 1 Executing Query select * from sample_table
