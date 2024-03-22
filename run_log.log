@@ -1,0 +1,63 @@
+[2024-03-21 23:20:13,346] Aparn-Laptop/INFO/root: User 1 started
+[2024-03-21 23:20:13,491] Aparn-Laptop/INFO/root: User 1 Executing Query select * from sample_table
+[2024-03-21 23:20:14,464] Aparn-Laptop/INFO/root: User 1 completed Query
+[2024-03-21 23:20:14,500] Aparn-Laptop/INFO/root: User 2 started
+[2024-03-21 23:20:14,501] Aparn-Laptop/INFO/root: User 2 Executing Query select * from sample_table
+[2024-03-21 23:20:15,448] Aparn-Laptop/INFO/root: User 2 completed Query
+[2024-03-21 23:20:15,483] Aparn-Laptop/INFO/root: User 3 started
+[2024-03-21 23:20:15,484] Aparn-Laptop/INFO/root: User 3 Executing Query select * from sample_table
+[2024-03-21 23:20:16,429] Aparn-Laptop/INFO/root: User 3 completed Query
+[2024-03-21 23:20:16,465] Aparn-Laptop/INFO/root: User 4 started
+[2024-03-21 23:20:16,466] Aparn-Laptop/INFO/root: User 4 Executing Query select * from sample_table
+[2024-03-21 23:20:17,411] Aparn-Laptop/INFO/root: User 4 completed Query
+[2024-03-21 23:20:17,450] Aparn-Laptop/INFO/root: User 5 started
+[2024-03-21 23:20:17,450] Aparn-Laptop/INFO/root: User 5 Executing Query select * from sample_table
+[2024-03-21 23:20:18,394] Aparn-Laptop/INFO/root: User 5 completed Query
+[2024-03-21 23:20:18,430] Aparn-Laptop/INFO/root: User 6 started
+[2024-03-21 23:20:18,430] Aparn-Laptop/INFO/root: User 6 Executing Query select * from sample_table
+[2024-03-21 23:20:19,391] Aparn-Laptop/INFO/root: User 6 completed Query
+[2024-03-21 23:20:19,427] Aparn-Laptop/INFO/root: User 7 started
+[2024-03-21 23:20:19,427] Aparn-Laptop/INFO/root: User 7 Executing Query select * from sample_table
+[2024-03-21 23:20:20,389] Aparn-Laptop/INFO/root: User 7 completed Query
+[2024-03-21 23:20:20,425] Aparn-Laptop/INFO/root: User 8 started
+[2024-03-21 23:20:20,426] Aparn-Laptop/INFO/root: User 8 Executing Query select * from sample_table
+[2024-03-21 23:20:21,383] Aparn-Laptop/INFO/root: User 8 completed Query
+[2024-03-21 23:20:21,419] Aparn-Laptop/INFO/root: User 9 started
+[2024-03-21 23:20:21,419] Aparn-Laptop/INFO/root: User 9 Executing Query select * from sample_table
+[2024-03-21 23:20:22,401] Aparn-Laptop/INFO/root: User 9 completed Query
+[2024-03-21 23:20:22,438] Aparn-Laptop/INFO/root: User 10 started
+[2024-03-21 23:20:22,439] Aparn-Laptop/INFO/root: User 10 Executing Query select * from sample_table
+Traceback (most recent call last):
+  File "C:\Users\aparn\PycharmProjects\Python\db_locust_postgres.py", line 38, in executequery
+    rows = cursor.fetchall()
+           ^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "src\\gevent\\greenlet.py", line 908, in gevent._gevent_cgreenlet.Greenlet.run
+  File "C:\Users\aparn\PycharmProjects\Python\venv\Lib\site-packages\locust\user\users.py", line 188, in run_user
+    user.run()
+  File "C:\Users\aparn\PycharmProjects\Python\venv\Lib\site-packages\locust\user\users.py", line 156, in run
+    self._taskset_instance.run()
+  File "C:\Users\aparn\PycharmProjects\Python\venv\Lib\site-packages\locust\user\task.py", line 340, in run
+    self.execute_next_task()
+  File "C:\Users\aparn\PycharmProjects\Python\venv\Lib\site-packages\locust\user\task.py", line 373, in execute_next_task
+    self.execute_task(self._task_queue.pop(0))
+  File "C:\Users\aparn\PycharmProjects\Python\venv\Lib\site-packages\locust\user\task.py", line 487, in execute_task
+    task(self.user).run()
+  File "C:\Users\aparn\PycharmProjects\Python\venv\Lib\site-packages\locust\user\task.py", line 340, in run
+    self.execute_next_task()
+  File "C:\Users\aparn\PycharmProjects\Python\venv\Lib\site-packages\locust\user\task.py", line 373, in execute_next_task
+    self.execute_task(self._task_queue.pop(0))
+  File "C:\Users\aparn\PycharmProjects\Python\venv\Lib\site-packages\locust\user\task.py", line 385, in execute_task
+    task(self)
+  File "C:\Users\aparn\PycharmProjects\Python\db_locust_postgres.py", line 43, in executequery
+    cursor.close()
+KeyboardInterrupt
+2024-03-22T03:20:23Z <Greenlet at 0x27985c949a0: run_user(<db_locust_postgres.Testuser object at 0x000002798)> failed with KeyboardInterrupt
+
+[2024-03-21 23:20:23,474] Aparn-Laptop/INFO/locust.main: Shutting down (exit code 0)
+[2024-03-21 23:20:23,560] Aparn-Laptop/INFO/root: User 1 started
+[2024-03-21 23:20:23,592] Aparn-Laptop/INFO/root: User 1 Executing Query select * from sample_table
