@@ -1,0 +1,58 @@
+import os
+import difflib
+import re
+
+# Function to read SQL files
+def read_sql_files(folder_path):
+    sql_files = []
+    for filename in os.listdir(folder_path):
+        if filename.endswith('.sql'):
+            with open(os.path.join(folder_path, filename), 'r') as f:
+                sql_files.append(f.read())
+    return sql_files
+
+# Function to read the text file
+def read_text_file(file_path):
+    with open(file_path, 'r') as f:
+        text_content = f.read()
+    return text_content
+
+# Function to compare SQL queries and highlight column differences
+def compare_queries(sql_files, text_content):
+    for sql_content in sql_files:
+        sql_queries = re.split(r';\s*\n', sql_content)
+        text_queries = re.split(r';\s*\n', text_content)
+
+        for sql_query, text_query in zip(sql_queries, text_queries):
+            sql_columns = re.findall(r'\b\w+\b', sql_query)
+            text_columns = re.findall(r'\b\w+\b', text_query)
+
+            diff = difflib.ndiff(sql_columns, text_columns)
+            highlighted_diff = []
+
+            for line in diff:
+                if line.startswith('- '):
+                    highlighted_diff.append(f"\033[91m{line[2:]}\033[0m")  # Red for removed columns
+                elif line.startswith('+ '):
+                    highlighted_diff.append(f"\033[92m{line[2:]}\033[0m")  # Green for added columns
+                else:
+                    highlighted_diff.append(line[2:])
+
+            print('SQL Query:', sql_query)
+            print('Text Query:', text_query)
+            print('Column Differences:')
+            print(' '.join(highlighted_diff))
+            print()
+
+# Main function
+def main():
+    sql_folder_path = input("Enter the path to the folder containing SQL files: ")
+    text_file_path = input("Enter the path to the text file: ")
+
+    sql_files = read_sql_files(sql_folder_path)
+    text_content = read_text_file(text_file_path)
+
+    compare_queries(sql_files, text_content)
+
+if __name__ == "__main__":
+    main()
