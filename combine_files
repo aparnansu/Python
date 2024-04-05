@@ -1,0 +1,22 @@
+import os
+
+# Set the directory path where the files are located
+directory = '/path/to/directory'
+
+# Set the name for the combined file
+combined_file = 'combined_file.txt'
+
+# Create a new file to write the combined content
+with open(combined_file, 'w', encoding='utf-8') as outfile:
+    # Loop through all files in the directory
+    for filename in os.listdir(directory):
+        # Check if the current item is a file
+        if os.path.isfile(os.path.join(directory, filename)):
+            # Open the file and read its content
+            with open(os.path.join(directory, filename), 'r', encoding='utf-8') as infile:
+                content = infile.read()
+            
+            # Write the content to the combined file
+            outfile.write(content + '\n')
+
+print(f"All files in {directory} have been combined into {combined_file}")
