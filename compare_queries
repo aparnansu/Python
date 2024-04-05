@@ -48,11 +48,13 @@ def compare_queries(sql_files, text_content):
 def main():
     sql_folder_path = input("Enter the path to the folder containing SQL files: ")
     text_file_path = input("Enter the path to the text file: ")
+    output_file_path = input("Enter the path to the output file: ")
 
     sql_files = read_sql_files(sql_folder_path)
     text_content = read_text_file(text_file_path)
 
-    compare_queries(sql_files, text_content)
+    compare_queries(sql_files, text_content, output_file_path)
+    print(f"Output written to {output_file_path}")
 
 if __name__ == "__main__":
     main()
