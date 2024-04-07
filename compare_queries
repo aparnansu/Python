@@ -4,45 +4,74 @@ import re
 
 # Function to read SQL files
 def read_sql_files(folder_path):
-    sql_files = []
+    sql_files = {}
     for filename in os.listdir(folder_path):
         if filename.endswith('.sql'):
             with open(os.path.join(folder_path, filename), 'r') as f:
-                sql_files.append(f.read())
+                sql_content = f.read()
+                sql_queries = re.split(r';\s*\n', sql_content)
+                for query in sql_queries:
+                    table_name = extract_table_name(query)
+                    if table_name:
+                        table_name = remove_prefix_suffix(table_name)
+                        if table_name not in sql_files:
+                            sql_files[table_name] = []
+                        sql_files[table_name].append(query)
     return sql_files
 
 # Function to read the text file
 def read_text_file(file_path):
+    text_queries = {}
     with open(file_path, 'r') as f:
         text_content = f.read()
-    return text_content
+        queries = re.split(r';\s*\n', text_content)
+        for query in queries:
+            table_name = extract_table_name(query)
+            if table_name:
+                table_name = remove_prefix_suffix(table_name)
+                if table_name not in text_queries:
+                    text_queries[table_name] = []
+                text_queries[table_name].append(query)
+    return text_queries
+
+# Function to extract table name from a query
+def extract_table_name(query):
+    match = re.search(r'\bFROM\s+(\w+)', query, re.IGNORECASE)
+    if match:
+        return match.group(1)
+    return None
+
+# Function to remove prefix and suffix from table name
+def remove_prefix_suffix(table_name):
+    # Remove prefix and suffix patterns here
+    # For example, to remove "tbl_" prefix and "_123" suffix:
+    return re.sub(r'^tbl_|_\d+$', '', table_name)
 
 # Function to compare SQL queries and highlight column differences
-def compare_queries(sql_files, text_content):
-    for sql_content in sql_files:
-        sql_queries = re.split(r';\s*\n', sql_content)
-        text_queries = re.split(r';\s*\n', text_content)
+def compare_queries(sql_files, text_queries, output_file):
+    with open(output_file, 'w') as f:
+        for table_name, sql_queries in sql_files.items():
+            if table_name in text_queries:
+                f.write(f'Table: {table_name}\n\n')
+                for sql_query, text_query in zip(sql_queries, text_queries[table_name]):
+                    sql_columns = re.findall(r'\b\w+\b', sql_query)
+                    text_columns = re.findall(r'\b\w+\b', text_query)
 
-        for sql_query, text_query in zip(sql_queries, text_queries):
-            sql_columns = re.findall(r'\b\w+\b', sql_query)
-            text_columns = re.findall(r'\b\w+\b', text_query)
+                    diff = difflib.ndiff(sql_columns, text_columns)
+                    highlighted_diff = []
 
-            diff = difflib.ndiff(sql_columns, text_columns)
-            highlighted_diff = []
+                    for line in diff:
+                        if line.startswith('- '):
+                            highlighted_diff.append(f"\033[91m{line[2:]}\033[0m")  # Red for removed columns
+                        elif line.startswith('+ '):
+                            highlighted_diff.append(f"\033[92m{line[2:]}\033[0m")  # Green for added columns
+                        else:
+                            highlighted_diff.append(line[2:])
 
-            for line in diff:
-                if line.startswith('- '):
-                    highlighted_diff.append(f"\033[91m{line[2:]}\033[0m")  # Red for removed columns
-                elif line.startswith('+ '):
-                    highlighted_diff.append(f"\033[92m{line[2:]}\033[0m")  # Green for added columns
-                else:
-                    highlighted_diff.append(line[2:])
-
-            print('SQL Query:', sql_query)
-            print('Text Query:', text_query)
-            print('Column Differences:')
-            print(' '.join(highlighted_diff))
-            print()
+                    f.write('SQL Query: {}\n'.format(sql_query))
+                    f.write('Text Query: {}\n'.format(text_query))
+                    f.write('Column Differences:\n')
+                    f.write(' '.join(highlighted_diff) + '\n\n')
 
 # Main function
 def main():
@@ -51,9 +80,9 @@ def main():
     output_file_path = input("Enter the path to the output file: ")
 
     sql_files = read_sql_files(sql_folder_path)
-    text_content = read_text_file(text_file_path)
+    text_queries = read_text_file(text_file_path)
 
-    compare_queries(sql_files, text_content, output_file_path)
+    compare_queries(sql_files, text_queries, output_file_path)
     print(f"Output written to {output_file_path}")
 
 if __name__ == "__main__":
